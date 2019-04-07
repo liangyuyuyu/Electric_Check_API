@@ -23,6 +23,7 @@ namespace Electric_Check.Controllers
         ///<remarks>
         ///获取所有的用户信息，传给前端
         /// </remarks>
+        [Route("GetAllUsers")]
         public IQueryable<User> GetUsers()
         {
             return db.Users;
@@ -35,19 +36,24 @@ namespace Electric_Check.Controllers
         ///<remarks>
         ///根据用户ID获取用户信息，并返回给前端
         /// </remarks>
+        [Route("GetOneUser")]
         [ResponseType(typeof(User))]
         public IHttpActionResult GetUser(string id)
         {
             User user = db.Users.Find(id);
             if (user == null)
             {
-                return NotFound();
+                //return NotFound();
+                //return Json<dynamic>(new { msg = "NotFound" }); // 返回json数据
+                return Content<string>(HttpStatusCode.BadRequest, "NotFound");
+                //return Redirect("https://www.baidu.com");
             }
 
             return Ok(user);
         }
 
         // PUT: api/Users/5
+        [Route("PutUser")]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutUser(string id, User user)
         {
@@ -89,6 +95,7 @@ namespace Electric_Check.Controllers
         ///<remarks>
         ///提交用户信息，并返回用户信息给前端
         /// </remarks>
+        [Route("PostUser")]
         [ResponseType(typeof(User))]
         public IHttpActionResult PostUser(User user)
         {
@@ -96,6 +103,32 @@ namespace Electric_Check.Controllers
             {
                 return BadRequest(ModelState);
             }
+            if (user.Account == null || user.Account == null)
+                return Content<string>(HttpStatusCode.BadRequest, "account required");
+
+            if (user.Password == null || user.Password == "")
+                user.Password = "1234";
+
+            if (user.Name == null || user.Name == "")
+                user.Name = "用户";
+
+            if (user.Age == null || user.Age == 0)
+                user.Age = 21;
+
+            if (user.Type == null || user.Type == "")
+                user.Type = "3";
+
+            if (user.Sex == null || user.Sex == "")
+                user.Sex = "0";
+
+            if (user.Address == null || user.Address == "")
+                user.Address = "上海电力大学";
+
+            if (user.Avatar == null || user.Avatar == "")
+                user.Avatar = user.Sex == "0" ? "boy" : "girl";
+
+            if (user.EntryDate == null)
+                user.EntryDate = DateTime.Now;
 
             db.Users.Add(user);
 
@@ -125,13 +158,15 @@ namespace Electric_Check.Controllers
         ///<remarks>
         ///根据用户ID删除用户，返回被删除的用户信息
         /// </remarks>
+        [Route("DeleteUser")]
         [ResponseType(typeof(User))]
         public IHttpActionResult DeleteUser(string id)
         {
             User user = db.Users.Find(id);
             if (user == null)
             {
-                return NotFound();
+                //return NotFound();
+                return Content<string>(HttpStatusCode.BadRequest, "NotFound");
             }
 
             db.Users.Remove(user);
@@ -148,15 +183,7 @@ namespace Electric_Check.Controllers
             }
             base.Dispose(disposing);
         }
-
-        // GET: api/Users/6
-        ///<summary>
-        ///判断用户是否存在于数据库
-        ///</summary>
-        ///<remarks>
-        ///判断用户是否存在于数据库
-        /// </remarks>
-        //[ResponseType(typeof(User))]
+        
         private bool UserExists(string id)
         {
             return db.Users.Count(e => e.Account == id) > 0;
