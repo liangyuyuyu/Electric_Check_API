@@ -11,7 +11,7 @@ namespace Electric_Check.Models
     {
         [Key]
         [Display(Name= "账号")]
-        [Required(ErrorMessage = "账号不能为空")]
+        //[Required(ErrorMessage = "账号不能为空")]
         [StringLength(11, ErrorMessage = "用户账号最大长度为11")]
         public string Account { get; set; }
 

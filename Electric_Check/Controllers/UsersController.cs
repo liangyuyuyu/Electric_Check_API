@@ -103,8 +103,9 @@ namespace Electric_Check.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (user.Account == null || user.Account == null)
-                return Content<string>(HttpStatusCode.BadRequest, "account required");
+            if (user.Account == null || user.Account == "")
+                //return Content<string>(HttpStatusCode.BadRequest, "account required");
+                return Json<dynamic>(new { msg = "account required" });
 
             if (user.Password == null || user.Password == "")
                 user.Password = "1234";
@@ -140,7 +141,9 @@ namespace Electric_Check.Controllers
             {
                 if (UserExists(user.Account))
                 {
-                    return Conflict();
+                    //return Conflict();
+
+                    return Json<dynamic>(new { msg = "account registered" });
                 }
                 else
                 {
@@ -148,7 +151,9 @@ namespace Electric_Check.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = user.Account }, user);
+            //return CreatedAtRoute("DefaultApi", new { id = user.Account }, user);
+
+            return Ok(user);
         }
 
         // DELETE: api/Users/5
@@ -183,7 +188,7 @@ namespace Electric_Check.Controllers
             }
             base.Dispose(disposing);
         }
-        
+
         private bool UserExists(string id)
         {
             return db.Users.Count(e => e.Account == id) > 0;
