@@ -16,7 +16,6 @@ namespace Electric_Check.Controllers
     {
         private Electric_CheckContext db = new Electric_CheckContext();
 
-        // GET: api/Users
         ///<summary>
         ///获取所有的用户信息
         ///</summary>
@@ -24,7 +23,7 @@ namespace Electric_Check.Controllers
         ///获取所有的用户信息，传给前端
         /// </remarks>
         [Route("GetAllUsers")]
-        public IQueryable<User> GetUsers()
+        public IQueryable<User> GetAllUsers()
         {
             return db.Users;
         }
