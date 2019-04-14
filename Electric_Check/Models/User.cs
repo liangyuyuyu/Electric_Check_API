@@ -35,7 +35,7 @@ namespace Electric_Check.Models
         public string Sex { get; set; }
 
         [Display(Name = "住址")]
-        [StringLength(200, ErrorMessage = "用户地址最大长度为200")]
+        [StringLength(100, ErrorMessage = "用户地址最大长度为200")]
         public string Address { get; set; }
 
         [Display(Name = "头像")]
@@ -47,9 +47,11 @@ namespace Electric_Check.Models
         public DateTime? EntryDate { get; set; }
     }
 
-    public class Electric_CheckContext : DbContext
+    public class ElectricCheckContext : DbContext
     {
-        public Electric_CheckContext() { }
+        public ElectricCheckContext() { }
         public DbSet<User> Users { get; set; }
+        public DbSet<Pylon> Pylons { get; set; }
+        public DbSet<Task> Tasks { get; set; }
     }
 }

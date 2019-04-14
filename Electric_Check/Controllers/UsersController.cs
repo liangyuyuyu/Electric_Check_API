@@ -14,7 +14,7 @@ namespace Electric_Check.Controllers
 {
     public class UsersController : ApiController
     {
-        private Electric_CheckContext db = new Electric_CheckContext();
+        private ElectricCheckContext db = new ElectricCheckContext();
 
         ///<summary>
         ///获取所有的用户信息
@@ -89,10 +89,10 @@ namespace Electric_Check.Controllers
 
         // POST: api/Users
         ///<summary>
-        ///提交用户信息
+        ///添加用户信息
         ///</summary>
         ///<remarks>
-        ///提交用户信息，并返回用户信息给前端
+        ///添加用户信息，并返回用户信息给前端
         /// </remarks>
         [Route("PostUser")]
         [ResponseType(typeof(User))]
@@ -102,8 +102,8 @@ namespace Electric_Check.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (user.Account == null || user.Account == null)
-                return Content<string>(HttpStatusCode.BadRequest, "account required");
+            if (user.Account == null || user.Account == "")
+                return Content<string>(HttpStatusCode.BadRequest, "Account Required");
 
             if (user.Password == null || user.Password == "")
                 user.Password = "1234";
@@ -111,7 +111,7 @@ namespace Electric_Check.Controllers
             if (user.Name == null || user.Name == "")
                 user.Name = "用户";
 
-            if (user.Age == null || user.Age == 0)
+            if (user.Age == 0)
                 user.Age = 21;
 
             if (user.Type == null || user.Type == "")
@@ -147,7 +147,8 @@ namespace Electric_Check.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = user.Account }, user);
+            return Ok(user);
+            //return CreatedAtRoute("DefaultApi", new { controller = "Users", id = user.Account }, user);
         }
 
         // DELETE: api/Users/5
