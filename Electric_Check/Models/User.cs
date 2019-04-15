@@ -53,7 +53,6 @@ namespace Electric_Check.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Pylon> Pylons { get; set; }
         public DbSet<Task> Tasks { get; set; }
-
-        public System.Data.Entity.DbSet<Electric_Check.Models.Problem> Problems { get; set; }
+        public DbSet<Problem> Problems { get; set; }
     }
 }
