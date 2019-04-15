@@ -12,7 +12,7 @@ namespace Electric_Check.Models
         [Key]
         [Display(Name = "任务编号")]
         [Required(ErrorMessage = "任务编号不能为空")]
-        [StringLength(10, ErrorMessage = "任务编号最大长度为10")]
+        [StringLength(50, ErrorMessage = "任务编号最大长度为50")]
         public string Number { get; set; }
 
         [Display(Name = "任务介绍")]
@@ -30,38 +30,38 @@ namespace Electric_Check.Models
         public int Count { get; set; }
 
         [Display(Name = "任务当前状态")]
-        [StringLength(1, ErrorMessage = "任务当前状态的最大长度为1，（待分配0、进行中1、已完成2）")]
+        [StringLength(1, ErrorMessage = "任务当前状态的最大长度为1，（未开始0、进行中1、已完成2）")]
         public string State { get; set; }
-
-        [Display(Name = "任务站点的完成情况")]
-        [StringLength(100, ErrorMessage = "任务站点的完成情况的最大长度为100，（0,0,0,...   未开始0、进行中1、已完成2、有问题3）")]
-        public string Progress { get; set; }
 
         [Display(Name = "任务类型")]
         [StringLength(1, ErrorMessage = "任务类型的最大长度为1，（巡检0、维修1）")]
         public string Type { get; set; }
 
         [Display(Name = "任务创建日期")]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
-        public DateTime? CreatedDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
+        public DateTime CreatedDate { get; set; }
 
         [Display(Name = "任务规定完成的日期")]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
-        public DateTime? EndDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
+        public DateTime EndDate { get; set; }
 
         [Display(Name = "负责人姓名")]
         [Required(ErrorMessage = "负责人姓名不能为空")]
-        [StringLength(30, ErrorMessage = "负责人姓名最大长度为30")]
+        [StringLength(200, ErrorMessage = "负责人姓名最大长度为200，梁宇宇,王倩倩,...")]
         public string ResponsiblePeople { get; set; }
 
-        [Display(Name = "负责人完成任务后的描述")]
-        [Required(ErrorMessage = "负责人描述不能为空")]
-        [StringLength(2000, ErrorMessage = "负责人描述最大长度为2000")]
-        public string Describe { get; set; }
+        [Display(Name = "任务站点的完成情况")]
+        [StringLength(100, ErrorMessage = "任务站点的完成情况的最大长度为100，（0,0,0,...   未开始0、进行中1、已完成2、有问题3）")]
+        public string Progress { get; set; }
+
+        [Display(Name = "负责人完成任务后的报告")]
+        //[Required(ErrorMessage = "负责人报告不能为空")]
+        [StringLength(2000, ErrorMessage = "负责人报告最大长度为2000")]
+        public string Report { get; set; }
 
         [Display(Name = "任务完成日期")]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
-        public DateTime? CompletedDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
+        public DateTime CompletedDate { get; set; }
     }
 
     public class TaskContext : DbContext

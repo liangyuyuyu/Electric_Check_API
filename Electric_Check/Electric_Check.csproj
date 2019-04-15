@@ -185,11 +185,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProblemsController.cs" />
     <Compile Include="Controllers\PylonsController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Problem.cs" />
     <Compile Include="Models\Pylon.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\User.cs" />
