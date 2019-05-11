@@ -153,6 +153,11 @@ namespace Electric_Check.Controllers
             return Ok(task);
         }
 
+        public string Options()
+        {
+            return null; // HTTP 200 response with empty body
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -83,7 +83,7 @@ namespace Electric_Check.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-        
+
         ///<summary>
         ///添加电塔信息
         ///</summary>
@@ -98,7 +98,7 @@ namespace Electric_Check.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             if (pylon.Problems == null)
                 pylon.Problems = 0;
 
@@ -149,6 +149,11 @@ namespace Electric_Check.Controllers
             db.SaveChanges();
 
             return Ok(pylon);
+        }
+
+        public string Options()
+        {
+            return null; // HTTP 200 response with empty body
         }
 
         protected override void Dispose(bool disposing)
