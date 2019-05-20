@@ -20,6 +20,16 @@ namespace Electric_Check.Models
         [StringLength(500, ErrorMessage = "铁塔介绍最大长度为500")]
         public string Introduce { get; set; }
 
+        [Display(Name = "铁塔经度")]
+        [Required(ErrorMessage = "铁塔经度不能为空")]
+        [StringLength(50, ErrorMessage = "铁塔经度最大长度为50")]
+        public string Lng { get; set; }
+
+        [Display(Name = "铁塔纬度")]
+        [Required(ErrorMessage = "铁塔纬度不能为空")]
+        [StringLength(50, ErrorMessage = "铁塔纬度最大长度为50")]
+        public string Lat { get; set; }
+
         [Display(Name = "铁塔地址")]
         [Required(ErrorMessage = "铁塔地址不能为空")]
         [StringLength(100, ErrorMessage = "铁塔地址最大长度为100")]
