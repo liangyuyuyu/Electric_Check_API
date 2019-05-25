@@ -36,9 +36,9 @@ namespace Electric_Check.Controllers
         ///<remarks>
         ///根据任务编号获取任务信息，并返回给前端
         /// </remarks>
-        [Route("GetOneTask")]
+        [Route("GetTaskByID")]
         [ResponseType(typeof(Task))]
-        public IHttpActionResult GetTask(string id)
+        public IHttpActionResult GetTaskByID(string id)
         {
             Task task = db.Tasks.Find(id);
             if (task == null)
@@ -48,6 +48,30 @@ namespace Electric_Check.Controllers
             }
 
             return Ok(task);
+        }
+
+        ///<summary>
+        ///根据任务负责人获取任务信息
+        ///</summary>
+        ///<remarks>
+        ///根据任务负责人获取任务信息，并返回给前端
+        /// </remarks>
+        [Route("GetTaskByUser")]
+        public IQueryable<Task> GetTaskByUser(string userName)
+        {
+            return db.Tasks.Where(c => c.ResponsiblePeople.Contains(userName)).OrderByDescending(task => task.CreatedDate);
+        }
+
+        ///<summary>
+        ///根据任务发起人的手机号获取任务信息
+        ///</summary>
+        ///<remarks>
+        ///根据任务发起人的手机号获取任务信息，并返回给前端
+        /// </remarks>
+        [Route("GetTaskByReleasePersonPhone")]
+        public IQueryable<Task> GetTaskByReleasePersonPhone(string ReleasePersonPhone)
+        {
+            return db.Tasks.Where(c => c.ReleasePersonPhone.Contains(ReleasePersonPhone)).OrderByDescending(task => task.CreatedDate);
         }
 
         // PUT: api/Tasks/5
@@ -103,9 +127,17 @@ namespace Electric_Check.Controllers
 
             if (task.State == null || task.State == "")
                 task.State = "0";
+            if (task.Type == null || task.Type == "")
+                task.Type = "0";
+            if (task.Report == null || task.Report == "")
+                task.Report = "";
+            if (task.ReleasePersonName == null || task.ReleasePersonName == "")
+                task.ReleasePersonName = "";
+            if (task.ReleasePersonPhone == null || task.ReleasePersonPhone == "")
+                task.ReleasePersonPhone = "";
 
             task.CreatedDate = DateTime.Now;
-            //task.EndDate = DateTime.Parse(task.EndDate);
+            task.CompletedDate = task.EndDate;
 
             db.Tasks.Add(task);
 

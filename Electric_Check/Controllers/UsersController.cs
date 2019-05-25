@@ -51,6 +51,18 @@ namespace Electric_Check.Controllers
             return Ok(user);
         }
 
+        ///<summary>
+        ///根据用户类型获取用户信息
+        ///</summary>
+        ///<remarks>
+        ///根据用户类型获取用户信息，并返回给前端
+        /// </remarks>
+        [Route("GetUserByType")]
+        public IQueryable<User> GetUserByType(string Type)
+        {
+            return db.Users.Where(c => c.Type.Equals(Type));
+        }
+
         // PUT: api/Users/5
         [Route("PutUser")]
         [ResponseType(typeof(void))]

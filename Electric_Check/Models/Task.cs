@@ -62,6 +62,14 @@ namespace Electric_Check.Models
         [Display(Name = "任务完成日期")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
         public DateTime CompletedDate { get; set; }
+
+        [Display(Name = "任务发起人姓名")]
+        [StringLength(50, ErrorMessage = "任务发起人姓名最大长度为50")]
+        public string ReleasePersonName { get; set; }
+
+        [Display(Name = "任务发起人手机号")]
+        [StringLength(50, ErrorMessage = "任务发起人手机号最大长度为50")]
+        public string ReleasePersonPhone { get; set; }
     }
 
     public class TaskContext : DbContext

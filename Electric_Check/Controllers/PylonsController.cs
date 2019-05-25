@@ -25,7 +25,7 @@ namespace Electric_Check.Controllers
         [Route("GetAllPylons")]
         public IQueryable<Pylon> GetPylons()
         {
-            return db.Pylons;
+            return db.Pylons.OrderBy(pylon => pylon.Number);
         }
 
         // GET: api/Pylons/5
@@ -85,6 +85,63 @@ namespace Electric_Check.Controllers
         }
 
         ///<summary>
+        ///修改一个电塔的状态
+        ///</summary>
+        ///<remarks>
+        ///修改一个电塔的状态，并返回用户信息给前端
+        /// </remarks>
+        [Route("ChangeOnePylonState")]
+        [ResponseType(typeof(Pylon))]
+        public IHttpActionResult ChangeOnePylonState(string Number, string State)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Pylon pylon = db.Pylons.Where(c => c.Number == Number).FirstOrDefault();//先查找出要修改的对象
+
+            pylon.State = State;
+
+            db.SaveChanges();
+            return Ok(pylon);
+        }
+
+        ///<summary>
+        ///修改多个电塔的状态,及其电塔的负责人
+        ///</summary>
+        ///<remarks>
+        ///修改多个电塔的状态，及其电塔的负责人，并返回用户信息给前端
+        /// </remarks>
+        [Route("ChangePylonsState")]
+        [ResponseType(typeof(Pylon))]
+        public IHttpActionResult ChangePylonsState(string Numbers, string States, string ResponsiblePeople)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            string[] NumberArray = Numbers.Split(',');
+            string[] StateArray = States.Split(',');
+
+            // 循环查询及修改
+            for (int i = 0; i < StateArray.Length; i++)
+            {
+                string number = NumberArray[i];
+
+                Pylon pylon = db.Pylons.Where(c => c.Number == number).FirstOrDefault();//先查找出要修改的对象
+
+                pylon.State = StateArray[i];
+
+                pylon.CurrentResponsiblePerson = ResponsiblePeople;
+
+                db.SaveChanges();
+            }
+
+            return Ok();
+        }
+
+        ///<summary>
         ///添加电塔信息
         ///</summary>
         ///<remarks>
@@ -104,6 +161,14 @@ namespace Electric_Check.Controllers
 
             if (pylon.State == null || pylon.State == "")
                 pylon.State = "0";
+
+            if (pylon.CurrentResponsiblePerson == null || pylon.CurrentResponsiblePerson == "")
+                pylon.CurrentResponsiblePerson = "";
+
+            if (pylon.Pictures == null || pylon.Pictures == "")
+                pylon.Pictures = "";
+
+            pylon.CreatedDate = DateTime.Now;
 
             db.Pylons.Add(pylon);
 
