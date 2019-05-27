@@ -37,10 +37,15 @@ namespace Electric_Check.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
         public DateTime CreatedDate { get; set; }
 
-        [Display(Name = "巡检人员")]
-        [Required(ErrorMessage = "巡检人员不能为空")]
-        [StringLength(200, ErrorMessage = "巡检人员最大长度为200，梁宇宇,王倩倩,...")]
+        [Display(Name = "巡检人员姓名")]
+        [Required(ErrorMessage = "巡检人员姓名不能为空")]
+        [StringLength(200, ErrorMessage = "巡检人员姓名最大长度为200，梁宇宇,王倩倩,...")]
         public string CheckPeople { get; set; }
+
+        [Display(Name = "巡检人员手机号")]
+        [Required(ErrorMessage = "巡检人员手机号不能为空")]
+        [StringLength(11, ErrorMessage = "巡检人员手机号最大长度为11，梁宇宇,王倩倩,...")]
+        public string CheckPeoplePhone { get; set; }
 
         [Display(Name = "解决问题的截止时间")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]

@@ -109,6 +109,111 @@ namespace Electric_Check.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        ///<summary>
+        ///修改任务进度和状态
+        ///</summary>
+        ///<remarks>
+        ///修改任务进度和状态，并返回用户信息给前端
+        /// </remarks>
+        [Route("ChangeTaskProgressState")]
+        [ResponseType(typeof(Pylon))]
+        public IHttpActionResult ChangeTaskProgressState(string Number, string Progress, string State)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Task task = db.Tasks.Where(c => c.Number == Number).FirstOrDefault();//先查找出要修改的对象
+
+            task.Progress = Progress;
+
+            task.State = State;
+
+            if(State == "2") // 收到修改任务状态为2时，同时修改任务完成时间
+            {
+                task.CompletedDate = DateTime.Now;
+            }
+
+            db.SaveChanges();
+            return Ok(task);
+        }
+
+        ///<summary>
+        ///修改任务报告和状态
+        ///</summary>
+        ///<remarks>
+        ///修改任务报告和状态，并返回用户信息给前端
+        /// </remarks>
+        [Route("ChangeTaskReportState")]
+        [ResponseType(typeof(Pylon))]
+        public IHttpActionResult ChangeTaskReportState(string Number, string Report, string State)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Task task = db.Tasks.Where(c => c.Number == Number).FirstOrDefault();//先查找出要修改的对象
+
+            task.Report = Report;
+
+            task.State = State;
+
+            db.SaveChanges();
+
+            return Ok(task);
+        }
+
+        ///<summary>
+        ///修改任务记录
+        ///</summary>
+        ///<remarks>
+        ///修改任务记录，并返回用户信息给前端
+        /// </remarks>
+        [Route("ChangeTaskRecord")]
+        [ResponseType(typeof(Pylon))]
+        public IHttpActionResult ChangeTaskRecord(string Number, string Record)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Task task = db.Tasks.Where(c => c.Number == Number).FirstOrDefault();//先查找出要修改的对象
+
+            task.Record = Record;
+
+            db.SaveChanges();
+
+            return Ok(task);
+        }
+
+
+        ///<summary>
+        ///修改任务的问题编号
+        ///</summary>
+        ///<remarks>
+        ///修改任务的问题编号，并返回用户信息给前端
+        /// </remarks>
+        [Route("ChangeTaskProblemNumber")]
+        [ResponseType(typeof(Pylon))]
+        public IHttpActionResult ChangeTaskProblemNumber(string Number, string ProblemNumber)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Task task = db.Tasks.Where(c => c.Number == Number).FirstOrDefault();//先查找出要修改的对象
+
+            task.ProblemNumber = ProblemNumber;
+
+            db.SaveChanges();
+
+            return Ok(task);
+        }
+
         // POST: api/Tasks
         ///<summary>
         ///添加任务信息
@@ -127,14 +232,24 @@ namespace Electric_Check.Controllers
 
             if (task.State == null || task.State == "")
                 task.State = "0";
+
             if (task.Type == null || task.Type == "")
                 task.Type = "0";
+
             if (task.Report == null || task.Report == "")
                 task.Report = "";
+
             if (task.ReleasePersonName == null || task.ReleasePersonName == "")
                 task.ReleasePersonName = "";
+
             if (task.ReleasePersonPhone == null || task.ReleasePersonPhone == "")
                 task.ReleasePersonPhone = "";
+
+            if (task.Record == null || task.Record == "")
+                task.Record = "";
+
+            if (task.ProblemNumber == null || task.ProblemNumber == "")
+                task.ProblemNumber = "";
 
             task.CreatedDate = DateTime.Now;
             task.CompletedDate = task.EndDate;

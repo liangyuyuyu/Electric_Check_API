@@ -60,6 +60,7 @@ namespace Electric_Check.Controllers
         [Route("GetUserByType")]
         public IQueryable<User> GetUserByType(string Type)
         {
+
             return db.Users.Where(c => c.Type.Equals(Type));
         }
 

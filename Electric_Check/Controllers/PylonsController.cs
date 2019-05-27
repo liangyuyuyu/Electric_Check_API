@@ -85,14 +85,14 @@ namespace Electric_Check.Controllers
         }
 
         ///<summary>
-        ///修改一个电塔的状态
+        ///修改一个电塔的状态，及其负责人
         ///</summary>
         ///<remarks>
-        ///修改一个电塔的状态，并返回用户信息给前端
+        ///修改一个电塔的状态，及其负责人，并返回用户信息给前端
         /// </remarks>
-        [Route("ChangeOnePylonState")]
+        [Route("ChangePylonState")]
         [ResponseType(typeof(Pylon))]
-        public IHttpActionResult ChangeOnePylonState(string Number, string State)
+        public IHttpActionResult ChangePylonState(string Number, string State, string ResponsiblePeople)
         {
             if (!ModelState.IsValid)
             {
@@ -102,6 +102,15 @@ namespace Electric_Check.Controllers
             Pylon pylon = db.Pylons.Where(c => c.Number == Number).FirstOrDefault();//先查找出要修改的对象
 
             pylon.State = State;
+
+            if(ResponsiblePeople == "null")
+            {
+                pylon.CurrentResponsiblePerson = "";
+            }
+            else
+            {
+                pylon.CurrentResponsiblePerson = ResponsiblePeople;
+            }
 
             db.SaveChanges();
             return Ok(pylon);
@@ -163,7 +172,7 @@ namespace Electric_Check.Controllers
                 pylon.State = "0";
 
             if (pylon.CurrentResponsiblePerson == null || pylon.CurrentResponsiblePerson == "")
-                pylon.CurrentResponsiblePerson = "";
+                pylon.CurrentResponsiblePerson = "无";
 
             if (pylon.Pictures == null || pylon.Pictures == "")
                 pylon.Pictures = "";

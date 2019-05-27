@@ -70,6 +70,14 @@ namespace Electric_Check.Models
         [Display(Name = "任务发起人手机号")]
         [StringLength(50, ErrorMessage = "任务发起人手机号最大长度为50")]
         public string ReleasePersonPhone { get; set; }
+
+        [Display(Name = "任务记录")]
+        [StringLength(5000, ErrorMessage = "任务记录最大长度为5000")]
+        public string Record { get; set; }
+
+        [Display(Name = "任务问题的编号")]
+        [StringLength(5000, ErrorMessage = "任务问题的编号最大长度为5000")]
+        public string ProblemNumber { get; set; }
     }
 
     public class TaskContext : DbContext

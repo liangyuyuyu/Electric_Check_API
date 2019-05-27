@@ -45,6 +45,15 @@ namespace Electric_Check.Models
         [Display(Name = "入职日期")]
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}")]
         public DateTime? EntryDate { get; set; }
+
+
+        [Display(Name = "员工添加人姓名")]
+        [StringLength(50, ErrorMessage = "员工添加人姓名最大长度为50")]
+        public string AddPersonName { get; set; }
+
+        [Display(Name = "员工添加人手机号")]
+        [StringLength(11, ErrorMessage = "员工添加人手机号最大长度为11")]
+        public string AddPersonPhone { get; set; }
     }
 
     public class ElectricCheckContext : DbContext
